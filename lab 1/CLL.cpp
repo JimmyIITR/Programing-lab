@@ -7,45 +7,48 @@ template<typename S> struct Node{
     struct Node* next;
 };
 
-template<class T> class CLL{
+template<class T> class SLL{
     public:
-    struct Node<T> *head,*end;
-    CLL(){
+    struct Node<T> *head,*curr;
+    SLL(){
         head = NULL;
     }
-    void insert(int val){
+    void push_back(T val){
         struct Node<T> *newNode = new Node<T>;
         newNode->val = val;
         newNode->next = NULL;
         if(head == NULL){
             head = newNode;
-            end= head;
-            end->next = head;
+            curr= head;
         }
         else {
-            end->next= newNode;
-            end = end->next;
-            end->next = head;
+            curr->next= newNode;
+            curr = curr->next;
         }
         return;
-    }
-    void print(){
-        struct Node<T> *ptr = head;
-        do{ 
-            cout<<ptr->val<<" ";
+    }   
+    bool insertAfterNode(T curr, T val){
+        struct Node<T> *newNode = new Node<T>;
+        struct Node<T> *ptr = head, *temp;
+        newNode->val = val;
+        newNode->next = NULL;
+        while(ptr != NULL){
+            if(ptr->val == curr){
+                temp = ptr->next;
+                ptr->next = newNode;
+                ptr->next = temp;
+                return true;
+            }
             ptr = ptr->next;
-        }while(ptr != head);
-        cout<<endl;
-        return;
+        }
+        return false;
     }
-    //must be unique if not then first will get deleted
-    void remove(int val){
+    void removebyValue(T val){
         struct Node<T> *ptr = head,*sptr = head->next;
         if(ptr->val == val){
-            end->next = head->next;
             head = head->next;
         }
-        while(sptr != head){
+        while(sptr != NULL){
             if(sptr->val == val){
                 ptr->next = sptr->next;
                 return;
@@ -55,19 +58,58 @@ template<class T> class CLL{
         }
         return;
     }
+    void remove_back(){
+        struct Node<T> *curr = head, pre = NULL;
+        while(curr != NULL){
+            if(curr->next == NULL){
+                pre->next = NULL;
+                return;
+            }
+            pre = curr;
+            curr = curr->next;
+        }
+        return;
+    }
+    void print(){
+        struct Node<T> *ptr = head;
+        while(ptr != NULL){
+            cout<<ptr->val<<" ";
+            ptr = ptr->next;
+        }
+        cout<<endl;
+        return;
+    }
+    int size(){
+        struct Node<T> *ptr = head;
+        int size = 0;
+        while(ptr != NULL){
+            ptr = ptr->next;
+            size++;
+        }
+        return size;
+    }
+    bool find(T val){
+        struct Node<T> *ptr = head;
+        while(ptr !=NULL){
+            if(ptr->val == val)
+                return true;
+            ptr = ptr->next;
+        }
+        return false;
+    }
 };
 
-int main(){
-    CLL<char> newCLL;
-    newCLL.insert('a');
-    newCLL.insert('b');
-    newCLL.insert('c');
-    newCLL.insert('d');
-    newCLL.print();
-    newCLL.remove('b');
-    newCLL.remove('a');
-    newCLL.print();
-    newCLL.remove('d');
-    newCLL.print();
-    return 0;
-}
+// int main(){
+//     SLL<char> newSLL;
+//     newSLL.insert('a');
+//     newSLL.insert('b');
+//     newSLL.insert('c');
+//     newSLL.insert('d');
+//     newSLL.print();
+//     newSLL.remove('b');
+//     newSLL.remove('a');
+//     newSLL.print();
+//     newSLL.remove('d');
+//     newSLL.print();
+//     return 0;
+// }

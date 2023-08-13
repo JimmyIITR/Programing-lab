@@ -5,7 +5,7 @@ template<class T> class Array{
     public:
     int size=0;
     T *Arr;
-    void insert(int val){
+    void push_back(T val){
         size+=1;
         T *newArr = new T(size);
         for(int i=0;i<size-1;i++){
@@ -15,15 +15,39 @@ template<class T> class Array{
         Arr=newArr; 
         return;
     }
-    void print(){
+    void insert(int index,T val){
+        T *newArr= new T(size+1);
         for(int i=0;i<size;i++){
-            cout<<Arr[i]<<" ";
-        }
-        cout<<endl;
+            if(i==index){
+                newArrp[i] = val;
+                while(i<size){
+                    newArr[i+1] = Arr[i];
+                    i++;
+                }
+                break;
+            }
+        }        
+        size++;
+        Arr = newArr;
         return;
     }
-    //must be unique if not then first will get deleted
-    void remove(int val){
+    void removebyIndex(int index){
+        T *newArr= new T(size-1);
+        for(int i=0;i<size;i++){
+            if(i==index){
+                while(i<size){
+                    newArr[i] = Arr[i+1];
+                    i++;
+                }
+                break;
+            }
+            newArr[i] = Arr[i];
+        }        
+        size--;
+        Arr = newArr;
+        return;
+    }
+    void removebyValue(T val){
         T *newArr= new T(size-1);
         for(int i=0;i<size;i++){
             if(Arr[i]==val){
@@ -39,18 +63,43 @@ template<class T> class Array{
         Arr = newArr;
         return;
     }
+    int size(){
+        return size;
+    }
+    int find(T a){
+        for(int i=0;i<size;i++){
+            if(Arr[i] == a)
+                return i;
+        }
+        return -1;
+    }
+    int findallandcount(T a){
+        int count = 0;
+        for(int i=0;i<size;i++){
+            if(Arr[i] == a)
+                count++;
+        }
+        return count;
+    }
+    void print(){
+        for(int i=0;i<size;i++){
+            cout<<Arr[i]<<" ";
+        }
+        cout<<endl;
+        return;
+    }
 };
 
-int main(){
-    Array<char> newArr;
-    newArr.insert('a');
-    newArr.insert('b');
-    newArr.insert('c');
-    newArr.insert('d');
-    newArr.print();
-    newArr.remove('a');
-    newArr.remove('c');
-    newArr.print();
+// int main(){
+//     Array<char> newArr;
+//     newArr.insert('a');
+//     newArr.insert('b');
+//     newArr.insert('c');
+//     newArr.insert('d');
+//     newArr.print();
+//     newArr.remove('a');
+//     newArr.remove('c');
+//     newArr.print();
 
-    return 0;
-}
+//     return 0;
+// }

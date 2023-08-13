@@ -7,10 +7,10 @@ template<typename S> struct Node{
     struct Node* next;
 };
 
-template<class T> class SLL{
+template<class T> class CLL{
     public:
-    struct Node<T> *head,*curr;
-    SLL(){
+    struct Node<T> *head,*end;
+    CLL(){
         head = NULL;
     }
     void push_back(T val){
@@ -19,36 +19,23 @@ template<class T> class SLL{
         newNode->next = NULL;
         if(head == NULL){
             head = newNode;
-            curr= head;
+            end= head; 
+            end->next = head;
         }
         else {
-            curr->next= newNode;
-            curr = curr->next;
+            end->next= newNode;
+            end = end->next;
+            end->next = head;
         }
         return;
-    }   
-    bool insertAfterNode(T curr, T val){
-        struct Node<T> *newNode = new Node<T>;
-        struct Node<T> *ptr = head, *temp;
-        newNode->val = val;
-        newNode->next = NULL;
-        while(ptr != NULL){
-            if(ptr->val == curr){
-                temp = ptr->next;
-                ptr->next = newNode;
-                ptr->next = temp;
-                return true;
-            }
-            ptr = ptr->next;
-        }
-        return false;
     }
-    void removebyValue(T val){
+    void remove(T val){
         struct Node<T> *ptr = head,*sptr = head->next;
         if(ptr->val == val){
+            end->next = head->next;
             head = head->next;
         }
-        while(sptr != NULL){
+        while(sptr != head){
             if(sptr->val == val){
                 ptr->next = sptr->next;
                 return;
@@ -57,25 +44,13 @@ template<class T> class SLL{
             ptr = ptr->next;
         }
         return;
-    }
-    void remove_back(){
-        struct Node<T> *curr = head, pre = NULL;
-        while(curr != NULL){
-            if(curr->next == NULL){
-                pre->next = NULL;
-                return;
-            }
-            pre = curr;
-            curr = curr->next;
-        }
-        return;
-    }
+    } 
     void print(){
         struct Node<T> *ptr = head;
-        while(ptr != NULL){
+        do{ 
             cout<<ptr->val<<" ";
             ptr = ptr->next;
-        }
+        }while(ptr != head);
         cout<<endl;
         return;
     }
@@ -88,7 +63,7 @@ template<class T> class SLL{
         }
         return size;
     }
-    bool find(T val){
+    int find(){
         struct Node<T> *ptr = head;
         while(ptr !=NULL){
             if(ptr->val == val)
@@ -100,16 +75,16 @@ template<class T> class SLL{
 };
 
 // int main(){
-//     SLL<char> newSLL;
-//     newSLL.insert('a');
-//     newSLL.insert('b');
-//     newSLL.insert('c');
-//     newSLL.insert('d');
-//     newSLL.print();
-//     newSLL.remove('b');
-//     newSLL.remove('a');
-//     newSLL.print();
-//     newSLL.remove('d');
-//     newSLL.print();
+//     CLL<char> newCLL;
+//     newCLL.insert('a');
+//     newCLL.insert('b');
+//     newCLL.insert('c');
+//     newCLL.insert('d');
+//     newCLL.print();
+//     newCLL.remove('b');
+//     newCLL.remove('a');
+//     newCLL.print();
+//     newCLL.remove('d');
+//     newCLL.print();
 //     return 0;
 // }

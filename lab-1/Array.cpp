@@ -15,11 +15,21 @@ template<class T> class Array{
         Arr=newArr; 
         return;
     }
+    void push_front(T val){
+        size+=1;
+        T *newArr = new T(size);
+        newArr[0] = val;
+        for(int i=0;i<size-1;i++){
+            newArr[i+1] = Arr[i];
+        }
+        Arr=newArr; 
+        return;
+    }
     void insert(int index,T val){
         T *newArr= new T(size+1);
         for(int i=0;i<size;i++){
             if(i==index){
-                newArrp[i] = val;
+                newArr[i] = val;
                 while(i<size){
                     newArr[i+1] = Arr[i];
                     i++;
@@ -63,7 +73,7 @@ template<class T> class Array{
         Arr = newArr;
         return;
     }
-    int size(){
+    int n(){
         return size;
     }
     int find(T a){
@@ -87,6 +97,9 @@ template<class T> class Array{
         }
         cout<<endl;
         return;
+    }
+    T access(int index){
+        return Arr[index];
     }
 };
 

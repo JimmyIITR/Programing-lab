@@ -27,6 +27,13 @@ template<class T> class SLL{
         }
         return;
     }   
+    void push_front(T val){
+        struct Node<T> *newNode = new Node<T>;
+        newNode->val = val;
+        newNode->next = head;
+        head = newNode;
+        return;
+    }   
     bool insertAfterNode(T curr, T val){
         struct Node<T> *newNode = new Node<T>;
         struct Node<T> *ptr = head, *temp;
@@ -59,7 +66,7 @@ template<class T> class SLL{
         return;
     }
     void remove_back(){
-        struct Node<T> *curr = head, pre = NULL;
+        struct Node<T> *curr = head, *pre = NULL;
         while(curr != NULL){
             if(curr->next == NULL){
                 pre->next = NULL;
@@ -79,7 +86,7 @@ template<class T> class SLL{
         cout<<endl;
         return;
     }
-    int size(){
+    int n(){
         struct Node<T> *ptr = head;
         int size = 0;
         while(ptr != NULL){
@@ -96,6 +103,17 @@ template<class T> class SLL{
             ptr = ptr->next;
         }
         return false;
+    }
+    T access(int index){
+        struct Node<T> *curr = head, *pre = NULL;
+        int count =1;
+        while(curr != NULL && count <= index){
+            if(count == index)
+                return curr->val;
+            curr = curr->next;
+            count++;
+        }
+        return head->val;
     }
 };
 
